@@ -1,28 +1,18 @@
-var express     = require('express');
-var app         = express();
-var bodyParser  = require('body-parser');
-var path        = require('path');
+var express       = require('express');
+var app           = express();
+var bodyParser    = require('body-parser');
+var path          = require('path');
+var apiFunctions  = require('./js/apiFunctions'); 
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 var port = process.env.PORT || 3000;
 
-var data = [
-  {name: 'Lettuce', produceCode: 'A12T-4GH7-QPL9-3N4M', unitPrice: '3.46'},
-  {name: 'Peach', produceCode: 'E5T6-9UI3-TH15-QR88', unitPrice: '2.99'},
-  {name: 'Green Pepper', produceCode: 'YRT6-72AS-K736-L4AR', unitPrice: '0.79'},
-  {name: 'Gala Apple', produceCode: 'TQ4C-VV6T-75ZX-1RMR', unitPrice: '3.59'}
-];
+var startingData = require('./data');
 
-var deleteProduce = function(name) {
-  for (var i = 0; i < data.length; i++) {
-    if (data[i].name === name) {
-      data.splice(i, 1);
-      break;
-    }
-  }
-}
+var list = startingData.getList();
+
 
 app.route('/')
   .get(function(req, res){
@@ -31,17 +21,15 @@ app.route('/')
 
 app.route('/api/produce')
   .get(function(req, res){
-    res.json(data);
+    res.json(list);
   })
   .post(function(req, res){
-    data.push(req.body);
-    res.json({list: data});
+    res.json({list: apiFunctions.addProduce(list, req.body)});
   });
 
 app.route('/api/produce/:name')
   .delete(function(req, res){
-    deleteProduce(req.params.name);
-    res.json({list: data});
+    res.json({list: apiFunctions.deleteProduce(list, req.params.name)});
   });
 
 app.listen(port);
