@@ -46,6 +46,6 @@ app.route('/api/produce/:name')
       res.status(500).send((new Error('must provide name paramater to delete')).toString());
     }
   });
-
+app.use(express.static('./'));
 app.listen(port);
 console.log('Listening on port ' + port);

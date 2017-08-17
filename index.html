@@ -47,7 +47,6 @@
 
             <div class="form-group">
               <label for="unitPrice">Unit Price:</label>
-              <!-- <input type="text" class="form-control" ng-model="newProduce.unitPrice" name="name" required> -->
               <div class="input-group">
                 <span class="input-group-addon">$</span>
                 <input type="number" step="0.01" class="form-control" ng-model="newProduce.unitPrice" name="unitPrice">
@@ -66,55 +65,9 @@
       </div>
 
     </div>
-  <script src="http://code.angularjs.org/snapshot/angular.js"></script>
-  <script src="http://code.angularjs.org/snapshot/angular-resource.js"></script>
 
-  <script>
-    angular.module('myApp', [])
-      .controller('mainController', ['$scope', 'Produce', function ($scope, produce) {
-
-        $scope.newProduce = {};
-        $scope.isUpperCase = false;
-        $scope.produceList = produce.query();
-
-        $scope.getProduce = function() {
-          if ($scope.isUpperCase) {
-            $scope.produceList = produce.query({upperCase: 'true'});
-          }
-          else {
-            $scope.produceList = produce.query();
-          }
-        }
-
-        $scope.addProduce = function(data) {
-          produce.save(data, function(success){
-            $scope.errorMsg = null;
-            $scope.produceList = success.list;
-            $scope.newProduce = {};
-          }, function(err){
-            $scope.errorMsg = err.data;
-          });
-          
-        };
-
-        $scope.deleteProduce = function(data) {
-          produce.delete(data, function(response){
-            if(response.list) {
-              $scope.produceList = response.list;
-            }
-          });
-        };
-
-      }]);
-
-    angular.module('myApp').factory('Produce', ['$resource', function($resource){
-      return $resource('api/produce/:name', {
-        });
-    }]);
-
-    angular.element(function() {
-      angular.bootstrap(document, ['myApp', 'ngResource']);
-    });
-  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-resource.js"></script>
+  <script src="src/myApp.js"></script>
 </body>
 </html>

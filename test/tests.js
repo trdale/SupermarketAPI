@@ -3,6 +3,7 @@ var assert        = require('assert');
 var app           = require("../app.js");
 var apiFunctions  = require("../js/apiFunctions");
 var startingData  = require('../data');
+var benv          = require('benv');
 
 var port = process.env.PORT || 3000;
 var baseUrl = 'http://localhost:' + port + '/';
@@ -415,6 +416,36 @@ describe("statusCodes", function() {
         assert.equal(404, response.statusCode);
         done();
       });
+    });
+  });
+
+  describe('mainController', function() {
+    beforeEach(function setupEnvironment(done) {
+      benv.setup(function() {
+        benv.expose({
+          angular: benv.require('../node_modules/angular/angular.js', 'angular')
+        });
+        done();
+      });
+    });
+    beforeEach(function loadMainController() {
+      delete require.cache[require.resolve('../src/myApp')];
+      require('../src/myApp');
+    });
+
+    it('has a new produce object', function($controller){
+        var myController = $controller('mainController');
+
+        var consoleMe = function(thing) {
+          console.log(thing);
+        }
+
+        consoleMe(myController.newProduce);
+
+        assert.equal(true, true);
+    });
+    afterEach(function destroySyntheticBrowser(){
+      benv.teardown(true);
     });
   });
 });
