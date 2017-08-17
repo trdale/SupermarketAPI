@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "mocha"
+    "test": "nyc mocha"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
     "mocha": "^3.5.0",
+    "nyc": "^11.1.0",
     "request": "^2.81.0"
   }
 }

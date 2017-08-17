@@ -6,7 +6,11 @@
 <body>
   <div class="container">
     <h1 class="text-center">Supermarket Produce Tracker</h1>
+    
     <div ng-controller="mainController">
+      <div class="text-center">
+        <input type='checkbox' ng-model="isUpperCase" ng-change="getProduce()"> Retreive as Uppercase
+      </div>
 
       <table class="table table-striped table-bordered table-responsive">
         <thead>
@@ -37,13 +41,21 @@
             </div>
 
             <div class="form-group">
-              <label for="name">Produce Code:</label>
-              <input type="text" class="form-control" ng-model="newProduce.produceCode" name="name" required>
+              <label for="produceCode">Produce Code:</label>
+              <input type="text" class="form-control" ng-model="newProduce.produceCode" name="produceCode" required>
             </div>
 
             <div class="form-group">
-              <label for="name">Unit Price:</label>
-              <input type="text" class="form-control" ng-model="newProduce.unitPrice" name="name" required>
+              <label for="unitPrice">Unit Price:</label>
+              <!-- <input type="text" class="form-control" ng-model="newProduce.unitPrice" name="name" required> -->
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <input type="number" step="0.01" class="form-control" ng-model="newProduce.unitPrice" name="unitPrice">
+              </div>
+            </div>
+
+            <div ng-if="errorMsg" style="color: red; font-size: large; text-align: center;">
+              {{errorMsg}}
             </div>
             
             <div class="form-group pull-right">
@@ -62,21 +74,34 @@
       .controller('mainController', ['$scope', 'Produce', function ($scope, produce) {
 
         $scope.newProduce = {};
-
+        $scope.isUpperCase = false;
         $scope.produceList = produce.query();
 
-        console.log($scope.produceList);
+        $scope.getProduce = function() {
+          if ($scope.isUpperCase) {
+            $scope.produceList = produce.query({upperCase: 'true'});
+          }
+          else {
+            $scope.produceList = produce.query();
+          }
+        }
 
         $scope.addProduce = function(data) {
-          produce.save(data, function(response){
-            $scope.produceList = response.list;
+          produce.save(data, function(success){
+            $scope.errorMsg = null;
+            $scope.produceList = success.list;
+            $scope.newProduce = {};
+          }, function(err){
+            $scope.errorMsg = err.data;
           });
-          $scope.newProduce = {};
+          
         };
 
         $scope.deleteProduce = function(data) {
           produce.delete(data, function(response){
-            $scope.produceList = response.list;
+            if(response.list) {
+              $scope.produceList = response.list;
+            }
           });
         };
 

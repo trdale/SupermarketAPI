@@ -13,7 +13,6 @@ var startingData = require('./data');
 
 var list = startingData.getList();
 
-
 app.route('/')
   .get(function(req, res){
     res.sendFile(path.join(__dirname, 'index.html'));
@@ -21,15 +20,31 @@ app.route('/')
 
 app.route('/api/produce')
   .get(function(req, res){
-    res.json(list);
+    if (req.query.upperCase === 'true') {
+      res.json(apiFunctions.listToUpperCase(list));
+    } else {
+      res.json(list);
+    }
+    
   })
   .post(function(req, res){
-    res.json({list: apiFunctions.addProduce(list, req.body)});
+    apiFunctions.validateProduce(list, req.body, function(err, result){
+      if (err) {
+        res.status(500).send(err.toString());
+      } else {
+        req.body.produceCode = req.body.produceCode.toUpperCase();
+        res.json({list: apiFunctions.addProduce(list, req.body)});
+      }
+    });
   });
 
 app.route('/api/produce/:name')
   .delete(function(req, res){
-    res.json({list: apiFunctions.deleteProduce(list, req.params.name)});
+    if (req.params.name != ':name') {
+      res.json({list: apiFunctions.deleteProduce(list, req.params.name)});  
+    } else {
+      res.status(500).send((new Error('must provide name paramater to delete')).toString());
+    }
   });
 
 app.listen(port);
