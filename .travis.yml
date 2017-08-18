@@ -3,3 +3,9 @@ node_js:
   - "6.10.1"
 before_install:
   - npm i -g npm@3.10.10
+notifications:
+  email:
+    - trdale@gmail.com
+    - gsypolt@gannett.com
+    - sgunther@gannett.com
+    - klucas@gannett.com
