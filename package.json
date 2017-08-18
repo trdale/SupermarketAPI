@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "webpack src/myApp.js built.js",
+    "start": "node app",
     "test": "nyc mocha test/*.server.js && karma start"
   },
   "repository": {
