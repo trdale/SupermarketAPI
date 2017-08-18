@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app="myApp">
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
@@ -10,6 +10,10 @@
     <div ng-controller="mainController">
       <div class="text-center">
         <input type='checkbox' ng-model="isUpperCase" ng-change="getProduce()"> Retreive as Uppercase
+      </div>
+
+      <div ng-if="getDelErrMsg" style="color: red; font-size: large; text-align: center;">
+        {{getDelErrMsg}}
       </div>
 
       <table class="table table-striped table-bordered table-responsive">
@@ -67,7 +71,6 @@
     </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-resource.js"></script>
   <script src="src/myApp.js"></script>
 </body>
 </html>

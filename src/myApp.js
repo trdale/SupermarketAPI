@@ -1,45 +1,52 @@
 angular.module('myApp', [])
-  .controller('mainController', ['$scope', 'Produce', function ($scope, produce) {
-
+  .controller('mainController', ['$scope', '$http', function ($scope, $http) {
     $scope.newProduce = {};
     $scope.isUpperCase = false;
-    $scope.produceList = produce.query();
+    $scope.produceList = [];
+    $scope.getDelErrMsg = null;
 
-    $scope.getProduce = function() {
+    var init = function () {
+      $http.get('api/produce')
+          .then(function (response) { $scope.produceList = response.data; });
+    };
+    init();
+
+    $scope.getProduce = function () {
       if ($scope.isUpperCase) {
-        $scope.produceList = produce.query({upperCase: 'true'});
+        $http.get('api/produce?upperCase=true')
+          .then(function (response) {
+            $scope.getDelErrMsg = null;
+            $scope.produceList = response.data;
+          });
+      } else {
+        $http.get('api/produce')
+          .then(function (response) {
+            $scope.getDelErrMsg = null;
+            $scope.produceList = response.data;
+          });
       }
-      else {
-        $scope.produceList = produce.query();
-      }
-    }
-
-    $scope.addProduce = function(data) {
-      produce.save(data, function(success){
-        $scope.errorMsg = null;
-        $scope.produceList = success.list;
-        $scope.newProduce = {};
-      }, function(err){
-        $scope.errorMsg = err.data;
-      });
-      
     };
 
-    $scope.deleteProduce = function(data) {
-      produce.delete(data, function(response){
-        if(response.list) {
-          $scope.produceList = response.list;
-        }
-      });
+    $scope.addProduce = function (data) {
+      $http.post('api/produce', data)
+        .then(function (response) {
+          $scope.errorMsg = null;
+          $scope.newProduce = {};
+          $scope.produceList = response.data.list;
+        })
+        .catch(function (response) {
+          $scope.errorMsg = response.data;
+        });
     };
 
-}]);
-
-angular.module('myApp').factory('Produce', ['$resource', function($resource){
-  return $resource('api/produce/:name', {
-    });
-}]);
-
-angular.element(document).ready(function() {
-  angular.bootstrap(document, ['myApp', 'ngResource']);
-});
+    $scope.deleteProduce = function (data) {
+      $http.delete('api/produce/' + data.name)
+        .then(function (response) {
+          $scope.getDelErrMsg = null;
+          $scope.produceList = response.data.list;
+        })
+        .catch(function (response) {
+          $scope.getDelErrMsg = response.data;
+        });
+    };
+  }]);
