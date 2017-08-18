@@ -15,7 +15,6 @@ describe('data model', function () {
   });
   describe('the produce object', function () {
     var produce = startingData.getExampleProduce();
-
     it('is an object', function () {
       assert.equal(typeof produce, 'object');
     });
@@ -168,6 +167,7 @@ describe('apiFunctions', function () {
       });
     });
   });
+  var produce = startingData.getExampleProduce();
   describe('validateProduceName()', function () {
     it("has required property 'name'", function () {
       assert.equal(apiFunctions.checkRequired(produce, 'name'), true);
