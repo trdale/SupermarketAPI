@@ -9,7 +9,7 @@ Simple Node, Express, Angular api to demonstrate testing with Mocha, Chai, and K
  * [NodeJs](http://nodejs.org) >= 6.x
  * [Karma-Cli](http://karma-runner.github.io/1.0/intro/installation.html)
 
-### Installing
+## Installing
 
 Install 
 
@@ -23,16 +23,13 @@ Can be run on localhost:3000
 $ npm start
 ```
 
-## Running the tests
+## Tests
 
 ```sh
 $ npm test
 ```
 
-| Test Group | Acceptance Test | Type of Test | PreConditions | Actions | Assertion|
-| --- | --- | --- | --- | --- | --- |
-| a group | acceptance thing | this type | this precondition | this action | this assertion |
-| a group | acceptance thing | this type | this precondition | this action | this assertion |
+Test description can be found [here](test_descriptions.md)
 
 ## Authors
 
