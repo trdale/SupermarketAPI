@@ -1,4 +1,21 @@
 | Test Group | Acceptance Test | Type of Test | PreConditions | Actions | Assertion |
 | --- | --- | --- | --- | --- | --- |
-| a group | acceptance thing | this type | this precondition | this action | this assertion |
-| a group | acceptance thing | this type | this precondition | this action | this assertion |
+| Data Model | ProduceList is array | Unit | None | Array.isArray(produceList) | Array.isArray(produceList) === true |
+| Data Model | Produce list items are objects | Unit | Produce List with items in it | typeof produce | typeof produce === 'object' |
+| apiFunctions - listToUpperCase() | converts produceList names to uppercase | Unit | Produce list has data with lower case names | listToUpperCase(ProduceList) | ProduceList.names all uppercase |
+| apiFunctions - produceCodeFormatCheck() | returns true if a valid code is provided | Unit | produce object has valid produceCode | produceCodeFormatCheck(produceCode) | produceCodeFormatCheck(produceCode) returns true |
+| apiFunctions - produceCodeFormatCheck() | returns false with invalid characters in produceCode | Unit | Produce object has a produceCode with invalid characters | produceCodeFormatCheck(produceCode) | produceCodeFormatCheck(produceCode) returns false |
+| apiFunctions - produceCodeFormatCheck() | returns false with invalid character length in produceCode | Unit | Produce object has a produceCode with incorrect char length | produceCodeFormatCheck(produceCode) | produceCodeFormatCheck(produceCode) returns false |
+| apiFunctions - checkRequired | checks an object to return true if prop exsists | Unit | object has required prop | checkRequired(obj, prop) | checkRequired(obj, prop) returns true |
+| apiFunctions - checkRequired | checks an object to return false if prop does not exsist | Unit | object has does not have required prop | checkRequired(obj, prop) | checkRequired(obj, prop) returns false |
+| apiFunctions - getProduce() | returns a list of produce saved in memory | Unit | None | getProduce() | getProduce returns produceList |
+| apiFunctions - addProduce() | adds produce providede to produceList | Unit | produceList and a produce object | addProduce(list, produce) | produceList equals list with new produce |
+| apiFunctions - deleteProdce() | removes produce object based on name provided from middle of list | Unit | produceList and a produce object contained in list | deleteProduce(list, produce) | produceList equals no longer has produce |
+| apiFunctions - deleteProdce() | removes produce object based on name provided from start of list | Unit | produceList and a produce object contained in list | deleteProduce(list, produce) | produceList equals no longer has produce |
+| apiFunctions - deleteProdce() | removes produce object based on name provided from end of list | Unit | produceList and a produce object contained in list | deleteProduce(list, produce) | produceList equals no longer has produce |
+| apiFunctions - deleteProdce() | returns an error if provided name is not in list | Unit | produceList and a produce object not contained in list | deleteProduce(list, produce) | err returned equals 'Error: Name not found, unable to delete' |
+| apiFunctions - validateProduceName() | if produce object has required name prop returns true | Unit | produce object with name prop  | validateProduceName(list, produce) | validateProduceName(list, produce) returns true |
+| apiFunctions - validateProduceName() | if produce object does not have required name prop returns false | Unit | produce object without name prop  | validateProduceName(list, produce) | validateProduceName(list, produce) returns false |
+| apiFunctions - validateProduceName() | if produce object property name is only alphanumerics and spaces returns true | Unit | produce object with valid prop  | validateProduceName(list, produce) | validateProduceName(list, produce) returns true |
+| apiFunctions - validateProduceName() | if produce object property has name unique to data set returns true | Unit | produce object with unique name  | validateProduceName(list, produce) | validateProduceName(list, produce) returns true |
+| apiFunctions - validateProduceName() | if produce object property does not have unique name prop in data set returns false | Unit | produce object without unique name  | validateProduceName(list, produce) | validateProduceName(list, produce) returns false |
