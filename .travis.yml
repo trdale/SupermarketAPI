@@ -4,8 +4,4 @@ node_js:
 before_install:
   - npm i -g npm@3.10.10
 notifications:
-  email:
-    - trdale@gmail.com
-    - gsypolt@gannett.com
-    - sgunther@gannett.com
-    - klucas@gannett.com
+    slack: trdalegithub:kvg1v1SywwWYMzTXidGOejsM
