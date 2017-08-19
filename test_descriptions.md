@@ -64,8 +64,8 @@ Testing strategy was to first create a very basic API shell, then to begin testi
 | Angular - mainController - getProduce() | when called gets all produce from the server | API | None | getProduce() is called | produceList is returned from server |
 | Angular - mainController - getProduce() | when called gets all produce from the server upperCase when isUpperCase is true | API | None | getProduce() is called | produceList is returned from server with all upperCase names |
 | Angular - mainController - addProduce() | should add produce and return new list when valid object is passed | API | payload is valid produce | addProduce(newProduce) is called | produceList is returned from server with new produce added |
-| Angular - mainController - addProduce() | when given valid produce errMsg is set to null | addProduce(newProduce) is called | errMsg === null |
-| Angular - mainController - addProduce() | when given valid produce newProduce is set back to {} | addProduce(newProduce) is called | newProduce === {} |
-| Angular - mainController - addProduce() | when given invalid produce newProduce sets errMsg to error | addProduce(newProduce) is called | errMsg === error |
-| Angular - mainController - deleteProduce() | when given produce name produceList is returned without named produce | deleteProduce(name) is called | produceList returns without named produce |
-| Angular - mainController - deleteProduce() | when given produce invalid name getDelErrMsg is set to error | invalid name is sent as param, deleteProduce(name) is called | getDelErrMsg is set |
+| Angular - mainController - addProduce() | when given valid produce errMsg is set to null | Unit | errMsg != null | addProduce(newProduce) is called | errMsg === null |
+| Angular - mainController - addProduce() | when given valid produce newProduce is set back to {} | Unit | newProduce != {} | addProduce(newProduce) is called | newProduce === {} |
+| Angular - mainController - addProduce() | when given invalid produce newProduce sets errMsg to error | API | newProduce = invalid produce object | addProduce(newProduce) is called | errMsg === error |
+| Angular - mainController - deleteProduce() | when given produce name produceList is returned without named produce | API | provided name is valid | deleteProduce(name) is called | produceList returns without named produce |
+| Angular - mainController - deleteProduce() | when given produce invalid name getDelErrMsg is set to error | API | provided name is invalid | invalid name is sent as param, deleteProduce(name) is called | getDelErrMsg is set |
