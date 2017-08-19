@@ -194,7 +194,7 @@ describe('apiFunctions', function () {
     });
   });
   describe('validateProduceCode()', function () {
-    it("has required property 'produceCode'", function () {
+    it('has required property produceCode', function () {
       assert.equal(apiFunctions.checkRequired(produce, 'produceCode'), true);
     });
     it('contains only alphanumerics and dashes', function () {
@@ -317,7 +317,7 @@ describe('apiFunctions', function () {
   });
 });
 
-describe('statusCodes', function () {
+describe('API Tests', function () {
   describe('Main Page: /', function () {
     it('GET returns status code 200', function (done) {
       request.get(baseUrl, function (error, response, body) {
@@ -353,6 +353,19 @@ describe('statusCodes', function () {
         done();
       });
     });
+    it("GET request returns produce list", function (done) {
+      var data = [
+          {name: 'Lettuce', produceCode: 'A12T-4GH7-QPL9-3N4M', unitPrice: '3.46'},
+          {name: 'Peach', produceCode: 'E5T6-9UI3-TH15-QR88', unitPrice: '2.99'},
+          {name: 'Green Pepper', produceCode: 'YRT6-72AS-K736-L4AR', unitPrice: '0.79'},
+          {name: 'Gala Apple', produceCode: 'TQ4C-VV6T-75ZX-1RMR', unitPrice: '3.59'}
+      ];
+      request.get(apiUrl, function (error, response, body) {
+        body = JSON.parse(body);
+        assert.deepEqual(data, body);
+        done();
+      });
+    });
     it("GET returns status code 200 with query param 'upperCase=true'", function (done) {
       request.get(apiUrl + '?upperCase=true', function (error, response, body) {
         assert.equal(200, response.statusCode);
@@ -376,6 +389,19 @@ describe('statusCodes', function () {
     it('POST returns status code 200 with valid Payload', function (done) {
       request.post({url: apiUrl, form: {'name': 'Banana', 'produceCode': '5GT6-9UI3-TH15-QR88', 'unitPrice': 0.5}}, function (error, response, body) {
         assert.equal(200, response.statusCode);
+        done();
+      });
+    });
+    it('POST with valid payload adds payload to produceList', function (done) {
+      var dataWithBanana = [
+          {name: 'Lettuce', produceCode: 'A12T-4GH7-QPL9-3N4M', unitPrice: '3.46'},
+          {name: 'Peach', produceCode: 'E5T6-9UI3-TH15-QR88', unitPrice: '2.99'},
+          {name: 'Green Pepper', produceCode: 'YRT6-72AS-K736-L4AR', unitPrice: '0.79'},
+          {name: 'Gala Apple', produceCode: 'TQ4C-VV6T-75ZX-1RMR', unitPrice: '3.59'}
+          {name: 'Banana', produceCode: '5GT6-9UI3-TH15-QR88', unitPrice: 0.5}
+      ];
+      request.post({url: apiUrl, form: {'name': 'Banana', 'produceCode': '5GT6-9UI3-TH15-QR88', 'unitPrice': 0.5}}, function (error, response, body) {
+        assert.deepEqual(response.body.list, dataWithBanana);
         done();
       });
     });
@@ -416,6 +442,17 @@ describe('statusCodes', function () {
     it('DELETE returns status code 200 when provided name is found and deleted', function (done) {
       request.delete(baseUrl + 'api/produce/peach', function (error, response, body) {
         assert.equal(200, response.statusCode);
+        done();
+      });
+    });
+    it('DELETE returns deletes povided names produce from Produce list if name is found', function (done) {
+      var dataWithoutPeach = [
+          {name: 'Lettuce', produceCode: 'A12T-4GH7-QPL9-3N4M', unitPrice: '3.46'},
+          {name: 'Green Pepper', produceCode: 'YRT6-72AS-K736-L4AR', unitPrice: '0.79'},
+          {name: 'Gala Apple', produceCode: 'TQ4C-VV6T-75ZX-1RMR', unitPrice: '3.59'}
+        ];
+      request.delete(baseUrl + 'api/produce/peach', function (error, response, body) {
+        assert.deepEqual(response.body.list, dataWithoutPeach);
         done();
       });
     });
