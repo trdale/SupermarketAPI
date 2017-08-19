@@ -1,3 +1,5 @@
+Testing strategy was to first create a very basic API shell, then to begin testing that API. After the API was tested, functionality and acceptence criteria was created in a Test Driven Development.
+
 | Test Group | Acceptance Test | Type of Test | PreConditions | Actions | Assertion |
 | --- | --- | --- | --- | --- | --- |
 | Data Model | ProduceList is array | Unit | None | Array.isArray(produceList) | Array.isArray(produceList) === true |
@@ -35,19 +37,35 @@
 | apiFunctions - validateProduce() | otherwise valid produce object with invalid name property returns error | Unit | valid produce object | validateProduce(list, produce) | validateProduce(list, produce) returns error |
 | apiFunctions - validateProduce() | otherwise valid produce object with invalid produceCode property returns error | Unit | valid produce object | validateProduce(list, produce) | validateProduce(list, produce) returns error |
 | apiFunctions - validateProduce() | otherwise valid produce object with invalid unitPrice property returns error | Unit | valid produce object | validateProduce(list, produce) | validateProduce(list, produce) returns error |
-| Status Codes - '/' | GET request returns status 200 | API | None | GET request to '/' | response.statusCode === 200 |
-| Status Codes - '/' | POST request returns status 404 | API | None | POST request to '/' | response.statusCode === 404 |
-| Status Codes - '/' | DELETE request returns status 404 | API | None | DELETE request to '/' | response.statusCode === 404 |
-| Status Codes - '/' | PUT request returns status 404 | API | None | PUT request to '/' | response.statusCode === 404 |
-| Status Codes - '/api/produce' | GET request returns status 200 without query params| API | None | GET request to '/api/produce' | response.statusCode === 200 |
-| Status Codes - '/api/produce' | GET request returns status 200 with query param upperCase=true | API | None | GET request to '/api/produce?upperCase=true' | response.statusCode === 200 |
-| Status Codes - '/api/produce' | GET request returns produceList with upper case names | API | None | GET request to '/api/produce?upperCase=true' | produceList.names are all upper case |
-| Status Codes - '/api/produce' | POST request returns status 200 with payload of valid produce | API | None | POST request to '/api/produce' | response.statusCode === 200 |
-| Status Codes - '/api/produce' | POST request returns status 500 with invalid produce payload | API | None | POST request to '/api/produce' | response.statusCode === 500 |
-| Status Codes - '/api/produce' | DELETE request returns status 404 | API | None | DELETE request to '/api/produce' | response.statusCode === 404 |
-| Status Codes - '/api/produce' | PUT request returns status 404 | API | None | PUT request to '/api/produce' | response.statusCode === 404 |
-| Status Codes - '/api/produce/:name' | GET request returns status 404 | API | None | GET request to '/api/produce/:name' | response.statusCode === 404 |
-| Status Codes - '/api/produce/:name' | POST request returns status 404 | API | None | POST request to '/api/produce/:name' | response.statusCode === 404 |
-| Status Codes - '/api/produce/:name' | DELETE request returns status 200 when provided name is found in data | API | None | DELETE request to '/api/produce/:name' | response.statusCode === 200 |
-| Status Codes - '/api/produce/:name' | DELETE request returns status 500 when provided name is not found in data  | API | None | DELETE request to '/api/produce/:name' | response.statusCode === 500 |
-| Status Codes - '/api/produce/:name' | PUT request returns status 404 | API | None | PUT request to '/api/produce/:name' | response.statusCode === 404 |
+| API Tests - '/' | GET request returns status 200 | API | None | GET request to '/' | response.statusCode === 200 |
+| API Tests - '/' | POST request returns status 404 | API | None | POST request to '/' | response.statusCode === 404 |
+| API Tests - '/' | DELETE request returns status 404 | API | None | DELETE request to '/' | response.statusCode === 404 |
+| API Tests - '/' | PUT request returns status 404 | API | None | PUT request to '/' | response.statusCode === 404 |
+| API Tests - '/api/produce' | GET request returns status 200 without query params| API | None | GET request to '/api/produce' | response.statusCode === 200 |
+| API Tests - '/api/produce' | GET request returns produce list | API | None | GET request to '/api/produce' | produceList is returned |
+| API Tests - '/api/produce' | GET request returns status 200 with query param upperCase=true | API | None | GET request to '/api/produce?upperCase=true' | response.statusCode === 200 |
+| API Tests - '/api/produce' | GET request returns produceList with upper case names | API | None | GET request to '/api/produce?upperCase=true' | produceList.names are all upper case |
+| API Tests - '/api/produce' | POST request returns status 200 with payload of valid produce | API | None | POST request to '/api/produce' | response.statusCode === 200 |
+| API Tests - '/api/produce' | POST request returns produceList with added whem when payload of valid produce is provided | API | None | POST request to '/api/produce' | produceList has exsisting and new  |
+| API Tests - '/api/produce' | POST request returns status 500 with invalid produce payload | API | None | POST request to '/api/produce' | response.statusCode === 500 |
+| API Tests - '/api/produce' | DELETE request returns status 404 | API | None | DELETE request to '/api/produce' | response.statusCode === 404 |
+| API Tests - '/api/produce' | PUT request returns status 404 | API | None | PUT request to '/api/produce' | response.statusCode === 404 |
+| API Tests - '/api/produce/:name' | GET request returns status 404 | API | None | GET request to '/api/produce/:name' | response.statusCode === 404 |
+| API Tests - '/api/produce/:name' | POST request returns status 404 | API | None | POST request to '/api/produce/:name' | response.statusCode === 404 |
+| API Tests - '/api/produce/:name' | DELETE request returns status 200 when provided name is found in data | API | None | DELETE request to '/api/produce/:name' | response.statusCode === 200 |
+| API Tests - '/api/produce/:name' | DELETE request returns list without item of name provided | API | None | DELETE request to '/api/produce/:name' | produceList is returned without item provided |
+| API Tests - '/api/produce/:name' | DELETE request returns status 500 when provided name is not found in data  | API | None | DELETE request to '/api/produce/:name' | response.statusCode === 500 |
+| API Tests - '/api/produce/:name' | PUT request returns status 404 | API | None | PUT request to '/api/produce/:name' | response.statusCode === 404 |
+| Angular - mainController | newProduce is empty object on load | Unit | None | mainController loads | newProduce === {} |
+| Angular - mainController | isUpperCase is false on load | Unit | None | mainController loads | isUpperCase === false |
+| Angular - mainController | errMsg is null on load | Unit | None | mainController loads | errMsg === null |
+| Angular - mainController | getDelRrrMsg is null on load | Unit | None | mainController loads | getDelErrMsg === null |
+| Angular - mainController | on init of controller, produceList is set to startingData | Unit | None | mainController init function auto runs on load | produceList === startingData |
+| Angular - mainController - getProduce() | when called gets all produce from the server | API | None | getProduce() is called | produceList is returned from server |
+| Angular - mainController - getProduce() | when called gets all produce from the server upperCase when isUpperCase is true | API | None | getProduce() is called | produceList is returned from server with all upperCase names |
+| Angular - mainController - addProduce() | should add produce and return new list when valid object is passed | API | payload is valid produce | addProduce(newProduce) is called | produceList is returned from server with new produce added |
+| Angular - mainController - addProduce() | when given valid produce errMsg is set to null | addProduce(newProduce) is called | errMsg === null |
+| Angular - mainController - addProduce() | when given valid produce newProduce is set back to {} | addProduce(newProduce) is called | newProduce === {} |
+| Angular - mainController - addProduce() | when given invalid produce newProduce sets errMsg to error | addProduce(newProduce) is called | errMsg === error |
+| Angular - mainController - deleteProduce() | when given produce name produceList is returned without named produce | deleteProduce(name) is called | produceList returns without named produce |
+| Angular - mainController - deleteProduce() | when given produce invalid name getDelErrMsg is set to error | invalid name is sent as param, deleteProduce(name) is called | getDelErrMsg is set |
