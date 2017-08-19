@@ -397,7 +397,7 @@ describe('API Tests', function () {
           {name: 'Lettuce', produceCode: 'A12T-4GH7-QPL9-3N4M', unitPrice: '3.46'},
           {name: 'Peach', produceCode: 'E5T6-9UI3-TH15-QR88', unitPrice: '2.99'},
           {name: 'Green Pepper', produceCode: 'YRT6-72AS-K736-L4AR', unitPrice: '0.79'},
-          {name: 'Gala Apple', produceCode: 'TQ4C-VV6T-75ZX-1RMR', unitPrice: '3.59'}
+          {name: 'Gala Apple', produceCode: 'TQ4C-VV6T-75ZX-1RMR', unitPrice: '3.59'},
           {name: 'Banana', produceCode: '5GT6-9UI3-TH15-QR88', unitPrice: 0.5}
       ];
       request.post({url: apiUrl, form: {'name': 'Banana', 'produceCode': '5GT6-9UI3-TH15-QR88', 'unitPrice': 0.5}}, function (error, response, body) {
