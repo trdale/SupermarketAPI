@@ -353,7 +353,7 @@ describe('API Tests', function () {
         done();
       });
     });
-    it("GET request returns produce list", function (done) {
+    it('GET request returns produce list', function (done) {
       var data = [
           {name: 'Lettuce', produceCode: 'A12T-4GH7-QPL9-3N4M', unitPrice: '3.46'},
           {name: 'Peach', produceCode: 'E5T6-9UI3-TH15-QR88', unitPrice: '2.99'},
@@ -393,15 +393,16 @@ describe('API Tests', function () {
       });
     });
     it('POST with valid payload adds payload to produceList', function (done) {
-      var dataWithBanana = [
-          {name: 'Lettuce', produceCode: 'A12T-4GH7-QPL9-3N4M', unitPrice: '3.46'},
-          {name: 'Peach', produceCode: 'E5T6-9UI3-TH15-QR88', unitPrice: '2.99'},
-          {name: 'Green Pepper', produceCode: 'YRT6-72AS-K736-L4AR', unitPrice: '0.79'},
-          {name: 'Gala Apple', produceCode: 'TQ4C-VV6T-75ZX-1RMR', unitPrice: '3.59'},
-          {name: 'Banana', produceCode: '5GT6-9UI3-TH15-QR88', unitPrice: 0.5}
+      var dataToExpect = [
+        {name: 'Lettuce', produceCode: 'A12T-4GH7-QPL9-3N4M', unitPrice: '3.46'},
+        {name: 'Peach', produceCode: 'E5T6-9UI3-TH15-QR88', unitPrice: '2.99'},
+        {name: 'Green Pepper', produceCode: 'YRT6-72AS-K736-L4AR', unitPrice: '0.79'},
+        {name: 'Gala Apple', produceCode: 'TQ4C-VV6T-75ZX-1RMR', unitPrice: '3.59'},
+        {name: 'Banana', produceCode: '5GT6-9UI3-TH15-QR88', unitPrice: '0.50'},
+        {name: 'Grapes', produceCode: '1234-9UI3-TH15-QR88', unitPrice: '0.25'}
       ];
-      request.post({url: apiUrl, form: {'name': 'Banana', 'produceCode': '5GT6-9UI3-TH15-QR88', 'unitPrice': 0.5}}, function (error, response, body) {
-        assert.deepEqual(response.body.list, dataWithBanana);
+      request.post({url: apiUrl, form: {'name': 'Grapes', 'produceCode': '1234-9UI3-TH15-QR88', 'unitPrice': 0.25}}, function (error, response, body) {
+        assert.deepEqual(JSON.parse(response.body).list, dataToExpect);
         done();
       });
     });
@@ -446,13 +447,14 @@ describe('API Tests', function () {
       });
     });
     it('DELETE returns deletes povided names produce from Produce list if name is found', function (done) {
-      var dataWithoutPeach = [
-          {name: 'Lettuce', produceCode: 'A12T-4GH7-QPL9-3N4M', unitPrice: '3.46'},
-          {name: 'Green Pepper', produceCode: 'YRT6-72AS-K736-L4AR', unitPrice: '0.79'},
-          {name: 'Gala Apple', produceCode: 'TQ4C-VV6T-75ZX-1RMR', unitPrice: '3.59'}
-        ];
-      request.delete(baseUrl + 'api/produce/peach', function (error, response, body) {
-        assert.deepEqual(response.body.list, dataWithoutPeach);
+      var dataToExpect = [
+        { name: 'Lettuce', produceCode: 'A12T-4GH7-QPL9-3N4M', unitPrice: '3.46' },
+        { name: 'Green Pepper', produceCode: 'YRT6-72AS-K736-L4AR', unitPrice: '0.79' },
+        { name: 'Gala Apple', produceCode: 'TQ4C-VV6T-75ZX-1RMR', unitPrice: '3.59' },
+        { name: 'Banana', produceCode: '5GT6-9UI3-TH15-QR88', unitPrice: '0.50' }
+      ];
+      request.delete(baseUrl + 'api/produce/Grapes', function (error, response, body) {
+        assert.deepEqual(JSON.parse(response.body).list, dataToExpect);
         done();
       });
     });
