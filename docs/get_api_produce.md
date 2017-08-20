@@ -26,7 +26,9 @@ None
 
 **Request**
 
-http://localhost:3000/api/produce?uppercase=true
+```sh
+$ curl http://localhost:3000/api/produce
+```
 
 **Return**
 

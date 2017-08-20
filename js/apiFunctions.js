@@ -79,10 +79,10 @@ var validateUnitPrice = function (produce, cb) {
       produce.unitPrice = convertPriceToTwoDigit(produce.unitPrice);
       return cb(null, true);
     } else {
-      return cb(new Error('price is not a number'));
+      return cb(new Error('unitPrice is not a number'));
     }
   } else {
-    return cb(new Error('unit price required'));
+    return cb(new Error('unitPrice required'));
   }
 };
 
