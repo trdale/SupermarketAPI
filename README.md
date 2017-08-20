@@ -23,13 +23,19 @@ Can be run on localhost:3000
 $ npm start
 ```
 
+## API Endpoints
+
+* [GET /api/produce](docs/get_api_produce.md)
+* [POST /api/produce](docs/post_api_produce.md)
+* [DELETE /api/produce/:name](docs/delete_api_produce_name.md)
+
 ## Tests
 
 ```sh
 $ npm test
 ```
 
-Test description can be found [here](test_descriptions.md)
+Test description can be found [here](docs/test_descriptions.md)
 
 ## Authors
 
